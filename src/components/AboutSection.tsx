@@ -27,7 +27,7 @@ export default function AboutSection() {
   useEffect(() => {
     const timer = setInterval(() => {
       handleNext();
-    }, 10000); // Reveals next page automatically every 10 seconds
+    }, 20000); // Reveals next page automatically every 10 seconds
 
     return () => clearInterval(timer);
   }, [currentProfile]);
