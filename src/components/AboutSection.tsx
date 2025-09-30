@@ -1,19 +1,21 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
+import Img1 from '../assets/IMG_5605.png';
+import Img2 from '../assets/IMG_5679.png';
 
 // Example profile data. You can expand this with more profiles.
 const profiles = [
   {
     quote: "We're talking about a market that could be trillions of dollars—stablecoins could fundamentally change how we think about money movement globally.",
     author: "Ian Frederick, Computer Science Student",
-    image: "src/assets/IMG_5605.png" // Placeholder image
+    image: Img1
   },
   
   {
     quote: "Through hands-on projects in machine learning and intelligent systems, I've developed a strong foundation in both the technical and analytical aspects of AI development.",
     author: "Ian Frederick, Computer Science Student",
-    image: "src/assets/IMG_5679.png"
+    image: Img2
   }
 ];
 
