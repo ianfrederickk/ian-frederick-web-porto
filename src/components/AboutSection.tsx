@@ -9,13 +9,13 @@ const profiles = [
   {
     quote: "We're talking about a market that could be trillions of dollars—stablecoins could fundamentally change how we think about money movement globally.",
     author: "Ian Frederick, Computer Science Student",
-    image: Img1,
+    image: Img1
   },
   
   {
     quote: "Through hands-on projects in machine learning and intelligent systems, I've developed a strong foundation in both the technical and analytical aspects of AI development.",
     author: "Ian Frederick, Computer Science Student",
-    image: Img2,
+    image: Img2
   }
 ];
 
@@ -27,7 +27,7 @@ export default function AboutSection() {
   useEffect(() => {
     const timer = setInterval(() => {
       handleNext();
-    }, 10000); // Reveals next page automatically every 10 seconds
+    }, 0000); // Reveals next page automatically every 10 seconds
 
     return () => clearInterval(timer);
   }, [currentProfile]);
