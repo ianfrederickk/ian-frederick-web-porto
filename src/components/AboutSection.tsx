@@ -7,7 +7,7 @@ import Img2 from '../assets/IMG_5679.png';
 // Example profile data. You can expand this with more profiles.
 const profiles = [
   {
-    quote: "We're talking about a market that could be trillions of dollars—stablecoins could fundamentally change how we think about money movement globally.",
+    quote: "As a Computer Science student specializing in AI at BINUS University, I am driven by the transformative potential of artificial intelligence and data science.",
     author: "Ian Frederick, Computer Science Student",
     image: Img1
   },
@@ -27,7 +27,7 @@ export default function AboutSection() {
   useEffect(() => {
     const timer = setInterval(() => {
       handleNext();
-    }, 0000); // Reveals next page automatically every 10 seconds
+    }, 20000); // Reveals next page automatically every 10 seconds
 
     return () => clearInterval(timer);
   }, [currentProfile]);
@@ -70,10 +70,6 @@ export default function AboutSection() {
 
       {/* Main content container with backdrop blur */}
       <div className="relative z-20 flex flex-col md:flex-row w-full max-w-7xl h-full md:h-[60vh] text-white p-8 md:p-16 overflow-hidden ">
-        {/* Left column (empty for image space) */}
-        <div className="relative w-full md:w-1/2 hidden md:block"></div>
-
-        {/* Right column: Quote and Controls */}
         <div className="flex flex-col w-full md:w-1/2 p-4 md:p-8 rounded-lg bg-black bg-opacity-30">
           <motion.div
             key={currentProfile}
@@ -83,7 +79,7 @@ export default function AboutSection() {
             className="flex-grow flex flex-col justify-center space-y-8"
           >
             <p className="text-3xl md:text-4xl leading-snug font-semibold">
-              "{profile.quote}"
+              {profile.quote}
             </p>
             <p className="text-xl md:text-2xl font-medium text-neutral-300">
               - {profile.author}
