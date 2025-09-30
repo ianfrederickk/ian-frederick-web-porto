@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Plasma-inspired design system with sophisticated gradients and cinematic aesthetics */
+
+@layer base {
+  :root {
+    /* Sophisticated Dark Theme */
+    --background: 220 15% 4%;
+    --foreground: 0 0% 98%;
+
+    /* Sophisticated Color Palette */
+    --plasma-blue: 210 40% 65%;
+    --plasma-blue-glow: 210 45% 75%;
+    --plasma-cyan: 190 35% 70%;
+
+    /* Muted Purples */
+    --plasma-purple: 240 25% 60%;
+    --plasma-purple-deep: 235 30% 55%;
+    --plasma-violet: 250 20% 65%;
+
+    /* Subtle Accent Colors */
+    --plasma-pink: 320 30% 65%;
+    --plasma-rose: 340 25% 70%;
+    --plasma-magenta: 300 25% 60%;
+
+    /* UI Components */
+    --card: 240 15% 5%;
+    --card-foreground: 200 100% 95%;
+    --card-glass: 240 15% 8%;
+
+    --popover: 240 15% 8%;
+    --popover-foreground: 200 100% 95%;
+
+    --primary: 210 40% 65%;
+    --primary-foreground: 220 15% 4%;
+    --primary-glow: 210 45% 75%;
+
+    --secondary: 220 15% 8%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 220 15% 12%;
+    --muted-foreground: 210 15% 65%;
+
+    --accent: 240 25% 60%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 240 15% 15%;
+    --input: 240 15% 12%;
+    --ring: 195 100% 50%;
+
+    --radius: 1rem;
+
+    /* Sophisticated Gradients */
+    --gradient-plasma-primary: linear-gradient(135deg, hsl(var(--plasma-blue)), hsl(var(--plasma-purple)));
+    --gradient-plasma-hero: linear-gradient(180deg, transparent 0%, hsl(var(--background) / 0.4) 40%, hsl(var(--background) / 0.8) 100%);
+    --gradient-plasma-card: linear-gradient(135deg, hsl(var(--plasma-purple) / 0.05), hsl(var(--plasma-blue) / 0.05));
+    --gradient-plasma-button: linear-gradient(135deg, hsl(var(--plasma-blue)), hsl(var(--plasma-purple)));
+    --gradient-plasma-glow: radial-gradient(circle, hsl(var(--plasma-blue) / 0.1), transparent 70%);
+
+    /* Subtle Shadows */
+    --shadow-plasma-sm: 0 2px 8px hsl(var(--background) / 0.5);
+    --shadow-plasma-md: 0 4px 16px hsl(var(--background) / 0.3);
+    --shadow-plasma-lg: 0 8px 32px hsl(var(--background) / 0.2);
+    --shadow-plasma-glow: 0 0 40px hsl(var(--plasma-blue) / 0.15);
+
+    /* Animation Variables */
+    --transition-plasma: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    --transition-glow: box-shadow 0.3s ease-in-out;
+
+    --radius: 1rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-['Inter'] antialiased;
+    background: 
+      linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--background) / 0.98) 100%),
+      radial-gradient(ellipse at top left, hsl(var(--plasma-blue) / 0.03), transparent),
+      radial-gradient(ellipse at bottom right, hsl(var(--plasma-purple) / 0.03), transparent);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Plasma Glow Effects */
+  .plasma-glow {
+    position: relative;
+  }
+
+  .plasma-glow::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-plasma-glow);
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .plasma-glow:hover::before {
+    opacity: 1;
+  }
+
+  /* Glass morphism effect */
+  .glass {
+    background: hsl(var(--card-glass) / 0.8);
+    backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid hsl(var(--border) / 0.3);
+  }
+
+  /* Plasma text gradient */
+  .text-plasma {
+    background: var(--gradient-plasma-primary);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Floating animation */
+  .float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  /* Pulse glow animation */
+  .pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulseGlow {
+    0% { 
+      box-shadow: var(--shadow-plasma-sm);
+      transform: scale(1);
+    }
+    100% { 
+      box-shadow: var(--shadow-plasma-lg);
+      transform: scale(1.02);
+    }
+  }
+
+  /* Plasma button effect */
+  .btn-plasma {
+    background: var(--gradient-plasma-button);
+    border: 1px solid hsl(var(--plasma-cyan) / 0.3);
+    box-shadow: var(--shadow-plasma-sm);
+    transition: var(--transition-plasma);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-plasma::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, hsl(var(--plasma-blue) / 0.3), transparent);
+    transition: left 0.5s;
+  }
+
+  .btn-plasma:hover::before {
+    left: 100%;
+  }
+
+  .btn-plasma:hover {
+    box-shadow: var(--shadow-plasma-glow);
+    transform: translateY(-2px);
+  }
+
+  /* Plasma glow background for cards */
+  .bg-plasma-glow {
+    background: radial-gradient(circle, hsl(var(--plasma-blue) / 0.1), hsl(var(--plasma-purple) / 0.1), transparent);
+  }
+
+  /* Skill badge */
+  .skill-badge {
+    background: var(--gradient-plasma-card);
+    border: 1px solid hsl(var(--plasma-purple) / 0.3);
+    box-shadow: var(--shadow-plasma-sm);
+    backdrop-filter: blur(8px);
+    transition: var(--transition-plasma);
+  }
+
+  .skill-badge:hover {
+    box-shadow: var(--shadow-plasma-md);
+    transform: translateY(-2px);
+    border-color: hsl(var(--plasma-cyan) / 0.5);
+  }
+
+  /* Profile glow border */
+  .profile-glow {
+    position: relative;
+    border-radius: 50%;
+    padding: 4px;
+    background: var(--gradient-plasma-primary);
+    box-shadow: var(--shadow-plasma-glow);
+  }
+
+  .profile-glow img {
+    border-radius: 50%;
+    border: 2px solid hsl(var(--background));
+  }
+}
