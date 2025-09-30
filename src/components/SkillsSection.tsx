@@ -8,7 +8,7 @@ export default function AboutSection() {
   // Scroll progress hanya untuk section ini (0 -> 1)
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["0.5 1", "0.5 0.2"], // mulai saat masuk viewport, selesai saat keluar
+    offset: ["0.5 1", "0.5 0.3"], // mulai saat masuk viewport, selesai saat keluar
   });
 
   const logoBlocks = [
@@ -25,9 +25,6 @@ export default function AboutSection() {
 
   ];
 
-  // Variabel animasi untuk teks
-  // const textOpacity = useTransform(scrollYProgress, [0, 0.4], [0, 1]);
-  // const textX = useTransform(scrollYProgress, [0, 0.4], [50, 0]);
 
 return (
     <section 
@@ -35,6 +32,7 @@ return (
       id="skills"
       className="relative min-h-screen bg-white text-black py-20 px-4 md:px-8 lg:px-16 flex items-center justify-center overflow-hidden scroll-mt-20"
     >
+      <div className="w-[90%]">
       <div className="absolute inset-0 z-0 opacity-20">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-fuchsia-500 rounded-full mix-blend-multiply blur-2xl animate-pulse-slow"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-sky-500 rounded-full mix-blend-multiply blur-2xl animate-pulse-slow delay-1000"></div>
@@ -47,7 +45,7 @@ return (
             // style={{ opacity: textOpacity }}
             className="w-full flex flex-col justify-start relative px-4 md:pt-20"
           >
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-sans leading-tight mb-8 text-black drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-sans font-thin leading-tight mb-8 text-black drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">
               Technical Skills.
             </h2>
             <p className="text-xl text-neutral-400 leading-relaxed max-w-xl font-sans">
@@ -88,6 +86,7 @@ return (
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
     

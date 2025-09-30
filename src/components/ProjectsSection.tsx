@@ -158,18 +158,18 @@ export default function ProjectsSection() {
 
   return (
     <section id="projects" className="py-20 px-6 bg-white text-neutral-100 scroll-mt-20">
-      <div className="container mx-auto max-w-7xl relative">
+      <div className="container mx-auto max-w-7xl relative max-w-[80%] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-left mb-12"
+          className="text-left mb-0 flex flex-col gap-4"
         >
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-sans leading-tight mb-8 text-black drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-sans font-thin leading-tight text-black drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">
             Featured Projects.
           </h2>
-          <p className="text-xl text-neutral-400 leading-relaxed max-w-xl font-sans mb-12">
+          <p className="text-xl text-neutral-400 leading-relaxed max-w-xl font-sans">
             Showcasing AI and machine learning projects that demonstrate practical 
             applications of computer science concepts.
           </p>

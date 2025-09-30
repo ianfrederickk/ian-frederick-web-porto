@@ -72,7 +72,7 @@ export default function Navigation() {
         transition={{ duration: 0.8 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled 
-            ? 'bg-white' 
+            ? 'bg-transparent' 
             : 'bg-transparent'
         }`}
       >

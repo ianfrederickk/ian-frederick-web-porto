@@ -32,6 +32,7 @@ export default function FeaturedSection() {
 
   return (
     <section id="featured" className="py-20 px-6 scroll-mt-20">
+    <div className="w-[90%]">
       <div className="container mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -104,6 +105,7 @@ export default function FeaturedSection() {
           </Button>
         </motion.div>
       </div>
+    </div>
     </section>
   );
 }

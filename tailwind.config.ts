@@ -91,6 +91,15 @@ export default {
         plasma: ["Orbitron", "sans-serif"],
         mori: ["DM Sans", "sans-serif"],
       },
+
+      theme: {
+        extend: {
+          maxWidth: {
+            "90": "90%", // bikin class max-w-90
+          },
+        },
+      },
+      
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
