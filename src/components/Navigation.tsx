@@ -9,12 +9,9 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { label: 'Education', href: '#education' },
     { label: 'Projects', href: '#projects' },
     { label: 'Skills', href: '#skills' },
     { label: 'About', href: '#about' },
-    { label: 'Featured', href: '#featured' },
-    { label: 'Contact', href: '#contact' }
   ];
 
   useEffect(() => {
@@ -72,7 +69,7 @@ export default function Navigation() {
         transition={{ duration: 0.8 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled 
-            ? 'bg-transparent' 
+            ? 'bg-white' 
             : 'bg-transparent'
         }`}
       >
@@ -84,7 +81,7 @@ export default function Navigation() {
               className={`text-2xl font-sans font-thin leading-tight cursor-pointer transition-colors ${
               isScrolled 
                 ? 'text-gray-900 hover:text-blue-500' 
-                : 'text-gray-900 hover:text-blue-500' // Tetap gelap agar terlihat di latar belakang terang
+                : 'text-gray-900 hover:text-blue-500' 
               }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -92,31 +89,33 @@ export default function Navigation() {
               Ian's
             </motion.button>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
+            {/* Desktop Navigation - Dihapus/Disembunyikan */}
+            {/* Karena Anda hanya ingin ikon menu, bagian ini tidak ditampilkan */}
+            <div className="hidden">
               {navItems.map((item, index) => (
                 <motion.button
                   key={item.href}
                   onClick={() => scrollToSection(item.href)}
                   className={`hover:text-blue-500 transition-colors relative group font-extralight ${
                   isScrolled 
-                    ? 'text-gray-700' // Hitam/Gelap saat di-scroll
-                    : 'text-gray-700' // Hitam/Gelap saat di atas
+                    ? 'text-gray-700' 
+                    : 'text-gray-700'
                   }`}
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
                   {item.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-300"></span>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gray-900 group-hover:w-1/12 transition-all duration-300"></span>
                 </motion.button>
               ))}
             </div>
 
-            {/* Mobile Menu Button - Selalu Hitam */}
+            {/* Mobile Menu Button - SELALU TERLIHAT (Hapus md:hidden) */}
             <Button
               variant="ghost"
-              className="md:hidden text-gray-900 bg-transparent hover:text-gray-500 hover:bg-transparent p-4 h-auto w-auto"
+              // Hapus 'md:hidden' agar tombol muncul di semua ukuran layar
+              className="text-gray-900 bg-transparent hover:text-gray-500 hover:bg-transparent p-0 h-auto w-auto" 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? (
@@ -129,34 +128,40 @@ export default function Navigation() {
         </div>
       </motion.nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu (Layar Penuh) - Digunakan untuk menampilkan tautan di semua ukuran */}
       <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            variants={menuVariants}
-            initial="closed"
-            animate="open"
-            exit="closed"
-            className="fixed inset-0 z-40 bg-white md:hidden overflow-y-auto pt-20"
-          >
-            <div className="container mx-auto px-6 py-8">
-              <div className="flex flex-col space-y-6">
-                {navItems.map((item, index) => (
-                  <motion.button
-                    key={item.href}
-                    onClick={() => scrollToSection(item.href)}
-                    variants={itemVariants}
-                    className="text-left text-5xl font-sans font-thin leading-tight text-gray-900 py-3 relative group transition-colors hover:text-gray-600"
-                  >
-                    {item.label}
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gray-900 group-hover:w-1/2 transition-all duration-300"></span>
-                  </motion.button>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+  {isMobileMenuOpen && (
+    <motion.div
+      variants={menuVariants}
+      initial="closed"
+      animate="open"
+      exit="closed"
+      className="fixed inset-0 z-40 flex flex-col"
+    >
+      {/* Bagian atas: Menu, hanya setengah layar */}
+      <div className="h-1/2 bg-white overflow-y-auto pt-20 shadow-lg">
+        <div className="container mx-auto px-6 py-8">
+          <div className="flex flex-col space-y-6">
+            {navItems.map((item, index) => (
+              <motion.button
+                key={item.href}
+                onClick={() => scrollToSection(item.href)}
+                variants={itemVariants}
+                className="text-left text-5xl font-sans font-thin leading-tight text-gray-900 py-3 relative group transition-colors hover:text-gray-600"
+              >
+                {item.label}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gray-900 group-hover:w-1/4 transition-all duration-300"></span>
+              </motion.button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Bagian bawah: blur background */}
+      <div className="h-1/2" onClick={() => setIsMobileMenuOpen(false)} />
+    </motion.div>
+  )}
+</AnimatePresence>
     </>
   );
 }

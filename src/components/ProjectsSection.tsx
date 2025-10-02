@@ -107,7 +107,8 @@ export default function ProjectsSection() {
     // Prioritas 1: Gunakan Custom Button (jika ada, hanya render satu tombol)
     if (project.customButton) {
         const buttonData = project.customButton;
-        const IconComponent = buttonData.icon;
+        // IconComponent harus di-resolve dari string jika perlu, tapi kita asumsikan sudah berupa component
+        const IconComponent = buttonData.icon === "FileText" ? FileText : null; 
         
         return (
           <Button 
@@ -125,31 +126,36 @@ export default function ProjectsSection() {
     } 
     
     // Prioritas 2: Render DUA tombol default (Code dan Demo)
+    // Logika untuk link kosong/hash (#) harus ditangani di sini untuk menghindari error
     return (
         <>
-            <Button 
-                size="sm" 
-                className="rounded-none bg-blue-500 hover:bg-blue-600 text-xs text-white flex-1"
-                onClick={(e) => {
-                    e.stopPropagation();
-                    window.open(project.github, '_blank');
-                }}
-            >
-                <Github className="mr-2 h-4 w-4" />
-                Code
-            </Button>
-            <Button 
-                variant="outline" 
-                size="sm" 
-                className="rounded-none bg-transparent border-none hover:bg-neutral-700 text-xs text-neutral-900 group-hover:text-white flex-1"
-                onClick={(e) => {
-                    e.stopPropagation();
-                    window.open(project.demo, '_blank');
-                }}
-            >
-                <ExternalLink className="mr-2 h-4 w-4" />
-                Demo
-            </Button>
+            {project.github && (
+                <Button 
+                    size="sm" 
+                    className="rounded-none bg-blue-500 hover:bg-blue-600 text-xs text-white flex-1"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        window.open(project.github, '_blank');
+                    }}
+                >
+                    <Github className="mr-2 h-4 w-4" />
+                    Code
+                </Button>
+            )}
+            {project.demo && (
+                <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="rounded-none bg-transparent border-none hover:bg-neutral-700 text-xs text-neutral-900 group-hover:text-white flex-1"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        window.open(project.demo, '_blank');
+                    }}
+                >
+                    <ExternalLink className="mr-2 h-4 w-4" />
+                    Demo
+                </Button>
+            )}
         </>
     );
   };
@@ -158,13 +164,15 @@ export default function ProjectsSection() {
 
   return (
     <section id="projects" className="py-20 px-6 bg-white text-neutral-100 scroll-mt-20">
-      <div className="container mx-auto max-w-7xl relative max-w-[80%] mx-auto">
+      {/* Hapus max-w-[80%] dan mx-auto dari container utama agar lebih lebar */}
+      <div className="container mx-auto max-w-7xl relative"> 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-left mb-0 flex flex-col gap-4"
+          // Kunci perubahan: Tambahkan padding atas (pt-20) untuk meniru posisi "Technical Skills"
+          className="text-left pt-10 mb-0 flex flex-col gap-4" 
         >
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-sans font-thin leading-tight text-black drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">
             Featured Projects.

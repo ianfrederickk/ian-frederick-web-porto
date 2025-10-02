@@ -25,6 +25,13 @@ export default function AboutSection() {
 
   ];
 
+// Teks opacity di sini tidak digunakan karena kita menggunakan scrollYProgress untuk blok logo.
+// Kita bisa membuat transisi sederhana untuk header.
+const textTransitionVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
+};
+
 
 return (
     <section 
@@ -39,13 +46,16 @@ return (
       </div>
       
       <div className="relative z-10 container mx-auto max-w-7xl">
-        <div className="flex flex-col md:flex-col gap-12 lg:gap-0">
-          {/* Teks di atas blok, mengisi lebar penuh */}
+        
+          {/* HEADER TEKS (DIPISAHKAN DARI STRUKTUR FLEX KOLOM) */}
           <motion.div
-            // style={{ opacity: textOpacity }}
-            className="w-full flex flex-col justify-start relative px-4 md:pt-20"
+            initial="hidden"
+            whileInView="visible"
+            variants={textTransitionVariants}
+            viewport={{ once: true }}
+            className="w-full flex flex-col justify-start relative px-4 mb-12 -mt-10 md:-mt-16" 
           >
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-sans font-thin leading-tight mb-8 text-black drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-sans font-thin leading-tight mb-4 text-black drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">
               Technical Skills.
             </h2>
             <p className="text-xl text-neutral-400 leading-relaxed max-w-xl font-sans">
@@ -53,7 +63,7 @@ return (
             </p>
           </motion.div>
           
-          {/* Blok Logo di bawah teks, mengisi lebar penuh */}
+
           <div className="w-full flex flex-col items-start px-4 md:items-start">
             <motion.p
               // style={{ opacity: textOpacity }}
@@ -85,7 +95,7 @@ return (
               })}
             </div>
           </div>
-        </div>
+        
       </div>
       </div>
     </section>
