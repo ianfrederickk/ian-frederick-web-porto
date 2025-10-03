@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useCursorPosition } from "@/hooks/useCursorPosition";
 import { Button } from '@/components/ui/button';
+import ProjectsModal from './ProjectsModal';
 import { Github, ExternalLink, Zap, Heart, ChevronLeft, ChevronRight, FileText} from 'lucide-react';
 
 function useResponsiveProjectsPerPage() {
@@ -27,6 +28,7 @@ export default function ProjectsSection() {
   const cursor = useCursorPosition();
   const ref = useRef(null);
   const [showBlur, setShowBlur] = useState(false);
+  const [modalOpenIdx, setModalOpenIdx] = useState(null);
   // Scroll progress for background animation
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -40,6 +42,7 @@ export default function ProjectsSection() {
       techStack: ["Python", "Fuzzy Logic", "SUMO", "OpenCV", "NumPy"],
       type: "Research",
       color: "hover:bg-blue-600",
+      modalBg: "bg-blue-600",
       customButton: { 
         text: "View Report", 
         link: "#report",
@@ -47,34 +50,38 @@ export default function ProjectsSection() {
       }
     },
     {
-      title: "Cat & Dog Emotion Classification", 
-      description: "Multi-modal emotion recognition system combining audio analysis and image processing to classify emotional states in cats and dogs.",
-      image: "🐱🐶", 
-      techStack: ["TensorFlow", "PyTorch", "OpenCV", "Librosa", "Pandas"],
+      title: "Dog Emotion Classification", 
+      description: "A deep learning project that leverages a ResNet50 model and a custom CNN head to classify images of dogs into four emotional states: happy, angry, relaxed, and sad.",
+      image: "🐶", 
+      techStack: ["Python","TensorFlow / Keras", "Pandas", "Matplotlib", "Scikit-learn", "Numpy","Pillow"],
       github: "#",
       demo: "#", 
       type: "Computer Vision",
-      color: "hover:bg-emerald-500"
+      color: "hover:bg-emerald-500",
+      modalBg: "bg-emerald-500"
     },
     {
       title: "AiCNE Detector",
-      description: "Developed a predictive model using time-series analysis to forecast stock prices, achieving high accuracy on historical data.",
+      description: "My 3rd Semester AI project dedicated to automatic classification and early detection of acne severity from facial images.",
       image: "💆‍♂️",
-      techStack: ["Python", "Pandas", "Scikit-learn", "LSTM"],
+      techStack: ["InceptionV3", "Tensorflow / Keras", "Python", "Matplotlib"],
       github: "https://github.com/ianganteng/ai-cne-detector",
       demo: "#", 
       type: "AI/ML",
-      color: "hover:bg-gradient-to-br from-orange-400 to-red-500"
+      color: "hover:bg-gradient-to-br from-orange-400 to-red-500",
+      modalBg: "bg-gradient-to-br from-orange-400 to-red-500"
     },
     {
       title: "CateRingZ Web",
       description: "A high-performance object detection model using YOLOv5 for real-time video analysis and tracking on edge devices.",
-      image: "👀",
+      image: "🍔🌭🍕",
       techStack: ["Python", "YOLOv5", "PyTorch", "OpenCV"],
       github: "#",
       demo: "#",
       type: "Computer Vision",
-      color: "hover:bg-purple-600"
+      color: "hover:bg-purple-600",
+      modalBg: "bg-purple-600",
+      // sliderImages: [
     },
     {
       title: "Natural Language Processing Engine",
@@ -84,18 +91,9 @@ export default function ProjectsSection() {
       github: "#",
       demo: "#",
       type: "AI/ML",
-      color: "hover:bg-emerald-600"
+      color: "hover:bg-emerald-600",
+      modalBg: "bg-emerald-600"
     },
-    {
-      title: "Personalized Recommendation System",
-      description: "A collaborative filtering and content-based recommendation system for e-commerce platforms, increasing user engagement by 20%.",
-      image: "🛍️",
-      techStack: ["Python", "Pandas", "Scikit-learn", "Flask"],
-      github: "#",
-      demo: "#",
-      type: "Data Science",
-      color: "hover:bg-orange-600"
-    }
   ];
   
   const projectsPerPage = useResponsiveProjectsPerPage();
@@ -111,9 +109,8 @@ export default function ProjectsSection() {
     setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
   };
 
-    const renderActionButton = (project) => {
+  const renderActionButton = (project, idx) => {
     
-    // Prioritas 1: Gunakan Custom Button (jika ada, hanya render satu tombol)
     if (project.customButton) {
         const buttonData = project.customButton;
         // IconComponent harus di-resolve dari string jika perlu, tapi kita asumsikan sudah berupa component
@@ -134,38 +131,36 @@ export default function ProjectsSection() {
         );
     } 
     
-    // Prioritas 2: Render DUA tombol default (Code dan Demo)
-    // Logika untuk link kosong/hash (#) harus ditangani di sini untuk menghindari error
     return (
-        <>
-            {project.github && (
-                <Button 
-                    size="sm" 
-                    className="rounded-none bg-blue-500 hover:bg-blue-600 text-xs text-white flex-1"
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        window.open(project.github, '_blank');
-                    }}
-                >
-                    <Github className="mr-2 h-4 w-4" />
-                    Code
-                </Button>
-            )}
-            {project.demo && (
-                <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="rounded-none bg-transparent border-none hover:bg-neutral-700 text-xs text-neutral-900 group-hover:text-white flex-1"
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        window.open(project.demo, '_blank');
-                    }}
-                >
-                    <ExternalLink className="mr-2 h-4 w-4" />
-                    Demo
-                </Button>
-            )}
-        </>
+      <>
+        {project.github && (
+          <Button
+            size="sm"
+            className="rounded-none bg-blue-500 hover:bg-blue-600 text-xs text-white flex-1"
+            onClick={(e) => {
+              e.stopPropagation();
+              window.open(project.github, '_blank');
+            }}
+          >
+            <Github className="mr-2 h-4 w-4" />
+            Code
+          </Button>
+        )}
+        {project.demo && (
+          <Button
+            variant="outline"
+            size="sm"
+            className="rounded-none bg-transparent border-none hover:bg-neutral-700 text-xs text-neutral-900 group-hover:text-white flex-1"
+            onClick={(e) => {
+              e.stopPropagation();
+              setModalOpenIdx(idx);
+            }}
+          >
+            <ExternalLink className="mr-2 h-4 w-4" />
+            Gallery
+          </Button>
+        )}
+      </>
     );
   };
 
@@ -266,7 +261,7 @@ export default function ProjectsSection() {
                       </div>
 
                       <div className="flex gap-3 mt-auto">
-                        {renderActionButton(project)}
+                        {renderActionButton(project, index)}
                       </div>
                     </div>
                   </div>
@@ -274,6 +269,21 @@ export default function ProjectsSection() {
               ))}
             </div>
           </div>
+          {/* Render all modals for all projects outside carousel mapping */}
+          {projects.map((project, index) => (
+            <ProjectsModal
+              key={index}
+              open={modalOpenIdx === index}
+              onClose={() => setModalOpenIdx(null)}
+              bgClass={project.modalBg + ' text-white'}
+            >
+              <div className="flex flex-col items-center gap-2">
+                <span className="text-4xl mb-2 font-sans font-extralight opacity-90">{project.image}</span>
+                <h3 className="text-2xl md:text-3xl lg:text-4xl font-sans font-extralight leading-tight mb-1 opacity-90">Gallery of {project.title}</h3>
+                {/* ...other modal content... */}
+              </div>
+            </ProjectsModal>
+          ))}
 
           {/* Arrow Right Button */}
           <button

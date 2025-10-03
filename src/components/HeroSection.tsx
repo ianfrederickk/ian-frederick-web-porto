@@ -13,6 +13,7 @@ export default function HeroSection() {
 
   return (
     <section
+      id="home"
       className="h-screen w-full flex items-center justify-center relative overflow-hidden bg-white snap-start"
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setShowBlur(true)}
