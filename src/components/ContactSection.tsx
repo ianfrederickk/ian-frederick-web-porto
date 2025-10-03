@@ -7,7 +7,7 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="py-40 px-6 bg-white text-neutral-900 scroll-mt-20"
+      className="py-40 px-6 bg-white text-neutral-900 scroll-mt-20 snap-start"
     >
       <div className="container mx-auto max-w-7xl relative">
         {/* Header */}

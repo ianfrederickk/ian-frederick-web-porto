@@ -1,8 +1,11 @@
 "use client";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { useCursorPosition } from "@/hooks/useCursorPosition";
 
 export default function AboutSection() {
+  const cursor = useCursorPosition();
+  const [showBlur, setShowBlur] = useState(false);
   const ref = useRef(null);
 
   // Scroll progress hanya untuk section ini (0 -> 1)
@@ -37,14 +40,11 @@ return (
     <section 
       ref={ref}
       id="skills"
-      className="relative min-h-screen bg-white text-black py-20 px-4 md:px-8 lg:px-16 flex items-center justify-center overflow-hidden scroll-mt-20"
+      className="relative min-h-screen w-full bg-white text-black py-20 px-4 md:px-8 lg:px-16 flex items-center justify-center overflow-hidden scroll-mt-20 snap-start"
+      onMouseEnter={() => setShowBlur(true)}
+      onMouseLeave={() => setShowBlur(false)}
     >
-      <div className="w-[90%]">
-      <div className="absolute inset-0 z-0 opacity-20">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-fuchsia-500 rounded-full mix-blend-multiply blur-2xl animate-pulse-slow"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-sky-500 rounded-full mix-blend-multiply blur-2xl animate-pulse-slow delay-1000"></div>
-      </div>
-      
+      <div className="w-[90%]">      
       <div className="relative z-10 container mx-auto max-w-7xl">
         
           {/* HEADER TEKS (DIPISAHKAN DARI STRUKTUR FLEX KOLOM) */}

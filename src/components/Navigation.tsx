@@ -139,7 +139,7 @@ export default function Navigation() {
       className="fixed inset-0 z-40 flex flex-col"
     >
       {/* Bagian atas: Menu, hanya setengah layar */}
-      <div className="h-1/2 bg-white overflow-y-auto pt-20 shadow-lg">
+      <div className="h-2/3 bg-white overflow-y-auto pt-20 shadow-lg">
         <div className="container mx-auto px-6 py-8">
           <div className="flex flex-col space-y-6">
             {navItems.map((item, index) => (

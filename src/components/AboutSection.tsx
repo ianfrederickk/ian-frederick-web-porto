@@ -9,13 +9,13 @@ const profiles = [
   {
     quote: "As a Computer Science student specializing in AI at BINUS University, I am driven by the transformative potential of artificial intelligence and data science.",
     author: "Ian Frederick, Computer Science Student",
-    image: Img1
+    image: Img2
   },
   
   {
     quote: "Through hands-on projects in machine learning and intelligent systems, I've developed a strong foundation in both the technical and analytical aspects of AI development.",
     author: "Ian Frederick, Computer Science Student",
-    image: Img2
+    image: Img1
   }
 ];
 
@@ -53,7 +53,7 @@ export default function AboutSection() {
   const profile = profiles[currentProfile];
 
   return (
-    <section id="about" className="min-h-screen w-full flex items-center justify-center relative p-0 overflow-hidden bg-neutral-900 font-sans">
+    <section id="about" className="min-h-screen w-full flex items-center justify-center relative p-0 overflow-hidden bg-neutral-900 font-sans snap-start">
       {/* Background Image with animation */}
       <motion.img
         key={currentProfile}
@@ -69,25 +69,25 @@ export default function AboutSection() {
       <div className="absolute inset-0 z-10 bg-black opacity-50"></div>
 
       {/* Main content container with backdrop blur */}
-      <div className="relative z-20 flex flex-col md:flex-row w-full max-w-7xl h-full md:h-[60vh] text-white p-8 md:p-16 overflow-hidden ">
-        <div className="flex flex-col w-full md:w-1/2 p-4 md:p-8 rounded-lg bg-black bg-opacity-30">
-          <motion.div
-            key={currentProfile}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex-grow flex flex-col justify-center space-y-8"
-          >
-            <p className="text-3xl md:text-4xl leading-snug font-semibold">
-              {profile.quote}
-            </p>
-            <p className="text-xl md:text-2xl font-medium text-neutral-300">
-              - {profile.author}
-            </p>
-          </motion.div>
-
-          {/* Pagination and Duration Line */}
-          <div className="mt-8">
+      <div className="relative z-20 flex flex-col md:flex-row w-full max-w-7xl h-full md:h-[60vh] text-white p-8 md:p-16 overflow-visible ">
+        <div className="flex flex-col w-full md:w-1/2 p-4 md:p-8 rounded-lg bg-black bg-opacity-30 h-full justify-between">
+          <div className="flex-grow flex flex-col justify-center space-y-8">
+            <motion.div
+              key={currentProfile}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <p className="text-3xl md:text-4xl leading-snug font-semibold">
+                {profile.quote}
+              </p>
+              <p className="text-xl md:text-2xl font-medium text-neutral-300">
+                - {profile.author}
+              </p>
+            </motion.div>
+          </div>
+          {/* Pagination and Duration Line INSIDE the box, always visible */}
+          <div className="w-full mt-8">
             <div className="w-full h-1 bg-neutral-600 rounded-full overflow-hidden">
               <motion.div
                 className="h-full bg-white"
