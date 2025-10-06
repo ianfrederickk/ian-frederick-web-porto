@@ -84,13 +84,14 @@ export default function ProjectsSection() {
       color: "hover:bg-purple-600",
       modalBg: "bg-purple-600",
       imageGallery: {
-        1: "src/assets/HomePage-Cateringz.png",
-        2: "src/assets/Homepage2-Cateringz.png",
-        3: "src/assets/Screenshot 2025-10-03 at 22.11.59.png",
-        4: "src/assets/Screenshot 2025-10-03 at 22.13.41.png",
-        5: "src/assets/Screenshot 2025-10-03 at 22.12.10.png",
-        6: "src/assets/Screenshot 2025-10-03 at 22.08.22.png",
-        7: "src/assets/Screenshot 2025-10-03 at 22.09.10.png",
+        
+        1: "/workspaces/ian-frederick-web-porto/src/assets/HomePage-Cateringz.png",
+        2: "/workspaces/ian-frederick-web-porto/src/assets/Homepage2-Cateringz.png",
+        3: "/workspaces/ian-frederick-web-porto/src/assets/Screenshot 2025-10-03 at 22.11.59.png",
+        4: "/workspaces/ian-frederick-web-porto/src/assets/Screenshot 2025-10-03 at 22.13.41.png",
+        5: "/workspaces/ian-frederick-web-porto/src/assets/Screenshot 2025-10-03 at 22.12.10.png",
+        6: "/workspaces/ian-frederick-web-porto/src/assets/Screenshot 2025-10-03 at 22.08.22.png",
+        7: "/workspaces/ian-frederick-web-porto/src/assets/Screenshot 2025-10-03 at 22.09.10.png",
       }
     },
     {
