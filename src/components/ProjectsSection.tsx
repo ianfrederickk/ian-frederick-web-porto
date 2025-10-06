@@ -6,6 +6,13 @@ import { Button } from '@/components/ui/button';
 import ProjectsModal from './ProjectsModal';
 import Stack from './Stack';
 import { Github, ExternalLink, Zap, Heart, ChevronLeft, ChevronRight, FileText} from 'lucide-react';
+import Img1 from '../assets/HomePage-Cateringz.png';
+import Img2 from '../assets/Homepage2-Cateringz.png';
+import Img3 from '../assets/Screenshot 2025-10-03 at 22.11.59.png';
+import Img4 from '../assets/Screenshot 2025-10-03 at 22.13.41.png';
+import Img5 from '../assets/Screenshot 2025-10-03 at 22.12.10.png';
+import Img6 from '../assets/Screenshot 2025-10-03 at 22.08.22.png';
+import Img7 from '../assets/Screenshot 2025-10-03 at 22.09.10.png';
 
 function useResponsiveProjectsPerPage() {
   const [perPage, setPerPage] = useState(3);
@@ -84,14 +91,13 @@ export default function ProjectsSection() {
       color: "hover:bg-purple-600",
       modalBg: "bg-purple-600",
       imageGallery: {
-        
-        1: "/workspaces/ian-frederick-web-porto/src/assets/HomePage-Cateringz.png",
-        2: "/workspaces/ian-frederick-web-porto/src/assets/Homepage2-Cateringz.png",
-        3: "/workspaces/ian-frederick-web-porto/src/assets/Screenshot 2025-10-03 at 22.11.59.png",
-        4: "/workspaces/ian-frederick-web-porto/src/assets/Screenshot 2025-10-03 at 22.13.41.png",
-        5: "/workspaces/ian-frederick-web-porto/src/assets/Screenshot 2025-10-03 at 22.12.10.png",
-        6: "/workspaces/ian-frederick-web-porto/src/assets/Screenshot 2025-10-03 at 22.08.22.png",
-        7: "/workspaces/ian-frederick-web-porto/src/assets/Screenshot 2025-10-03 at 22.09.10.png",
+        1: Img1,
+        2: Img2,
+        3: Img3,
+        4: Img4,
+        5: Img5,
+        6: Img6,
+        7: Img7,
       }
     },
     {
