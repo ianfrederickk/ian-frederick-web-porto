@@ -1,9 +1,10 @@
 "use client";
 import { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { useCursorPosition } from "@/hooks/useCursorPosition";
 import { Button } from '@/components/ui/button';
 import ProjectsModal from './ProjectsModal';
+import Stack from './Stack';
 import { Github, ExternalLink, Zap, Heart, ChevronLeft, ChevronRight, FileText} from 'lucide-react';
 
 function useResponsiveProjectsPerPage() {
@@ -22,6 +23,7 @@ function useResponsiveProjectsPerPage() {
 
   return perPage;
 }
+
 
 
 export default function ProjectsSection() {
@@ -54,7 +56,7 @@ export default function ProjectsSection() {
       description: "A deep learning project that leverages a ResNet50 model and a custom CNN head to classify images of dogs into four emotional states: happy, angry, relaxed, and sad.",
       image: "🐶", 
       techStack: ["Python","TensorFlow / Keras", "Pandas", "Matplotlib", "Scikit-learn", "Numpy","Pillow"],
-      github: "#",
+      github: "https://github.com/ianganteng/dog-emotion-classification/blob/main/README.md",
       demo: "#", 
       type: "Computer Vision",
       color: "hover:bg-emerald-500",
@@ -64,24 +66,32 @@ export default function ProjectsSection() {
       title: "AiCNE Detector",
       description: "My 3rd Semester AI project dedicated to automatic classification and early detection of acne severity from facial images.",
       image: "💆‍♂️",
-      techStack: ["InceptionV3", "Tensorflow / Keras", "Python", "Matplotlib"],
+      techStack: ["InceptionV3", "Tensorflow / Keras", "Python", "Gradio"],
       github: "https://github.com/ianganteng/ai-cne-detector",
-      demo: "#", 
+      demo: "https://huggingface.co/spaces/ianhee/ai-cne-detector", 
       type: "AI/ML",
       color: "hover:bg-gradient-to-br from-orange-400 to-red-500",
       modalBg: "bg-gradient-to-br from-orange-400 to-red-500"
     },
     {
       title: "CateRingZ Web",
-      description: "A high-performance object detection model using YOLOv5 for real-time video analysis and tracking on edge devices.",
+      description: "A Simple HTML, CSS, and JavaScript-based website for CateRingZ, my Human Computer Interaction project.",
       image: "🍔🌭🍕",
-      techStack: ["Python", "YOLOv5", "PyTorch", "OpenCV"],
-      github: "#",
+      techStack: ["HTML", "CSS", "JavaScript"],
+      github: "https://github.com/ianganteng/cateringz-web",
       demo: "#",
-      type: "Computer Vision",
+      type: "Web Development",
       color: "hover:bg-purple-600",
       modalBg: "bg-purple-600",
-      // sliderImages: [
+      imageGallery: {
+        1: "src/assets/HomePage-Cateringz.png",
+        2: "src/assets/Homepage2-Cateringz.png",
+        3: "src/assets/Screenshot 2025-10-03 at 22.11.59.png",
+        4: "src/assets/Screenshot 2025-10-03 at 22.13.41.png",
+        5: "src/assets/Screenshot 2025-10-03 at 22.12.10.png",
+        6: "src/assets/Screenshot 2025-10-03 at 22.08.22.png",
+        7: "src/assets/Screenshot 2025-10-03 at 22.09.10.png",
+      }
     },
     {
       title: "Natural Language Processing Engine",
@@ -146,7 +156,7 @@ export default function ProjectsSection() {
             Code
           </Button>
         )}
-        {project.demo && (
+        {project.imageGallery ? (
           <Button
             variant="outline"
             size="sm"
@@ -158,6 +168,19 @@ export default function ProjectsSection() {
           >
             <ExternalLink className="mr-2 h-4 w-4" />
             Gallery
+          </Button>
+        ) : project.demo && (
+          <Button
+            variant="outline"
+            size="sm"
+            className="rounded-none bg-transparent border-none hover:bg-neutral-700 text-xs text-neutral-900 group-hover:text-white flex-1"
+            onClick={(e) => {
+              e.stopPropagation();
+              window.open(project.demo, '_blank');
+            }}
+          >
+            <ExternalLink className="mr-2 h-4 w-4" />
+            Demo
           </Button>
         )}
       </>
@@ -278,10 +301,19 @@ export default function ProjectsSection() {
               bgClass={project.modalBg + ' text-white'}
             >
               <div className="flex flex-col items-center gap-2">
-                <span className="text-4xl mb-2 font-sans font-extralight opacity-90">{project.image}</span>
+                <span className="text-4xl mb-2 font-sans font-light opacity-90">{project.image}</span>
                 <h3 className="text-2xl md:text-3xl lg:text-4xl font-sans font-extralight leading-tight mb-1 opacity-90">Gallery of {project.title}</h3>
                 {/* ...other modal content... */}
               </div>
+
+            {project.imageGallery && (
+              <Stack 
+                cardsData={Object.entries(project.imageGallery).map(([id, img]) => ({ id: parseInt(id), img })).reverse()}
+                cardDimensions={{ width: 700, height: 700 }}
+                randomRotation={false}
+                sendToBackOnClick={true}
+              />
+            )} 
             </ProjectsModal>
           ))}
 

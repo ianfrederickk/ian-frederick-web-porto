@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 
 export default function ProjectsModal({ open, onClose, children, bgClass = "bg-white" }) {
-  // Prevent background scroll when modal is open
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -35,11 +34,11 @@ export default function ProjectsModal({ open, onClose, children, bgClass = "bg-w
           />
           <motion.div
             className={`
-              relative rounded-none shadow-xl 
+              relative rounded-none shadow-xl flex items-center justify-center
               w-11/12
               max-w-7xl 
               p-4 sm:p-8 
-              min-h-[300px] overflow-y-auto 
+              min-h-[300px] overflow-hidden
               max-h-[95vh]
               ${bgClass} 
             `}

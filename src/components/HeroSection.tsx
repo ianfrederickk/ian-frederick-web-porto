@@ -25,7 +25,7 @@ export default function HeroSection() {
           <div
             className="fixed inset-0 pointer-events-none z-0"
             style={{
-              background: `radial-gradient(300px at ${cursor.x}px ${cursor.y}px, rgba(192, 64, 255, 0.18) 0%, rgba(192, 64, 255, 0.10) 70%, transparent 100%)`,
+              background: `radial-gradient(600px at ${cursor.x}px ${cursor.y}px, rgba(192, 64, 255, 0.18) 0%, rgba(192, 64, 255, 0.10) 70%, transparent 100%)`,
               transition: 'background 1.5s',
             }}
           />
