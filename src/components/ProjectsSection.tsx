@@ -66,7 +66,7 @@ export default function ProjectsSection() {
       description: "A deep learning project that leverages a ResNet50 model and a custom CNN head to classify images of dogs into four emotional states: happy, angry, relaxed, and sad.",
       image: "🐶", 
       techStack: ["Python","TensorFlow / Keras", "Pandas", "Matplotlib", "Scikit-learn", "Numpy","Pillow"],
-      github: "https://github.com/ianganteng/dog-emotion-classification/blob/main/README.md",
+      github: "https://github.com/ianganteng/dog-emotion-classification",
       demo: "#", 
       type: "Computer Vision",
       color: "hover:bg-emerald-500",
@@ -104,13 +104,13 @@ export default function ProjectsSection() {
       }
     },
     {
-      title: "Natural Language Processing Engine",
-      description: "A custom NLP engine for sentiment analysis and text summarization from social media data using Transformer models.",
+      title: "Fake News Classification",
+      description: "Comparing two fake news classification method, using Word Embeddings and XGBoost, and using Fine-tuning of the BERT model",
       image: "🤖",
-      techStack: ["Python", "Hugging Face", "spaCy", "Transformers", "Gensim"],
-      github: "#",
+      techStack: ["Python", "nltk", "BERT", "Transformers", "Gensim"],
+      github: "https://github.com/ianganteng/clickbait-detection",
       demo: "#",
-      type: "AI/ML",
+      type: "NLP",
       color: "hover:bg-emerald-600",
       modalBg: "bg-emerald-600"
     },
@@ -180,18 +180,22 @@ export default function ProjectsSection() {
             Gallery
           </Button>
         ) : project.demo && (
-          <Button
-            variant="outline"
-            size="sm"
-            className="rounded-none bg-transparent border-none hover:bg-neutral-700 text-xs text-neutral-900 group-hover:text-white flex-1"
-            onClick={(e) => {
-              e.stopPropagation();
-              window.open(project.demo, '_blank');
-            }}
-          >
-            <ExternalLink className="mr-2 h-4 w-4" />
-            Demo
-          </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="rounded-none bg-transparent border-none hover:bg-neutral-700 text-xs text-neutral-900 group-hover:text-white flex-1"
+              onClick={(e) => {
+                e.stopPropagation();
+                if (project.demo === "#") {
+                  setModalOpenIdx(idx);
+                } else {
+                  window.open(project.demo, '_blank');
+                }
+              }}
+            >
+              <ExternalLink className="mr-2 h-4 w-4" />
+              Demo
+            </Button>
         )}
       </>
     );
@@ -310,20 +314,39 @@ export default function ProjectsSection() {
               onClose={() => setModalOpenIdx(null)}
               bgClass={project.modalBg + ' text-white'}
             >
-              <div className="flex flex-col items-center gap-2">
-                <span className="text-4xl mb-2 font-sans font-light opacity-90">{project.image}</span>
-                <h3 className="text-2xl md:text-3xl lg:text-4xl font-sans font-extralight leading-tight mb-1 opacity-90">Gallery of {project.title}</h3>
-                {/* ...other modal content... */}
-              </div>
+              <div className="grid justify-items-center gap-4"> 
+                <div className="flex flex-col items-center gap-2">
+                  <span className="text-4xl mb-2 font-sans font-light opacity-90">{project.image}</span>
+                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-sans font-extralight leading-tight mb-1 opacity-90">{project.imageGallery ? `Gallery of ${project.title}` : project.title}</h3>
+                  {/* ...other modal content... */}
+                </div>
 
-            {project.imageGallery && (
-              <Stack 
-                cardsData={Object.entries(project.imageGallery).map(([id, img]) => ({ id: parseInt(id), img })).reverse()}
-                cardDimensions={{ width: 700, height: 700 }}
-                randomRotation={false}
-                sendToBackOnClick={true}
-              />
-            )} 
+              {project.imageGallery && (
+                <Stack 
+                  cardsData={Object.entries(project.imageGallery).map(([id, img]) => ({ id: parseInt(id), img })).reverse()}
+                  cardDimensions={{ width: 700, height: 700 }}
+                  randomRotation={false}
+                  sendToBackOnClick={true}
+                />
+              )}
+
+              {!project.imageGallery && project.demo === "#" && (
+                <div className="flex flex-col items-center gap-4 mt-8">
+                  <p className="text-lg text-white text-center">
+                    Demo of <span className="font-bold">{project.title}</span> is not available, check this project at GitHub:
+                  </p>
+                  {project.github && project.github !== "#" && (
+                    <Button
+                      size="lg"
+                      className="rounded-none bg-blue-500 hover:bg-blue-600 text-white"
+                      onClick={() => window.open(project.github, '_blank')}
+                    >
+                      <Github className="mr-2 h-5 w-5" /> GitHub
+                    </Button>
+                  )}
+                </div>
+              )}
+              </div>
             </ProjectsModal>
           ))}
 

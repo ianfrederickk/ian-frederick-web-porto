@@ -11,6 +11,25 @@ export default function HeroSection() {
   };
   const [showBlur, setShowBlur] = useState(false);
 
+  const handleGithubClick = () => {
+    window.open("https://github.com/ianganteng", "_blank"); 
+  };
+
+  const handleResumeClick = () => {
+    const resumeUrl = "/CV_Academic_Ian_Frederick.pdf"; 
+    const link = document.createElement('a');
+    link.href = resumeUrl;
+    link.download = 'Ian_Frederick_CV.pdf'; 
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+
+
+
+
+
   return (
     <section
       id="home"
@@ -69,15 +88,17 @@ export default function HeroSection() {
           >
             <Button
               size="lg"
+              onClick={handleResumeClick}
               className="bg-foreground text-background hover:bg-gray-200 font-medium px-8 py-3 text-base rounded-none"
             >
               <Download className="mr-2 h-4 w-4" />
-              View Resume
+              View CV
             </Button>
             <Button
               variant="outline"
               size="lg"
               className="border-foreground/20 text-foreground hover:bg-foreground/20 hover:text-black backdrop-blur-sm px-8 py-3 text-base rounded-none"
+              onClick={handleGithubClick}
             >
               <Github className="mr-2 h-4 w-4" />
               GitHub Projects
