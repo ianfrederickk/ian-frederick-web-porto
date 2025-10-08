@@ -315,7 +315,7 @@ export default function ProjectsSection() {
               bgClass={project.modalBg + ' text-white'}
             >
               <div className="grid justify-items-center gap-4"> 
-                <div className="flex flex-col items-center gap-2">
+                <div className="flex flex-col items-center gap-2 mb-10">
                   <span className="text-4xl mb-2 font-sans font-light opacity-90">{project.image}</span>
                   <h3 className="text-2xl md:text-3xl lg:text-4xl font-sans font-extralight leading-tight mb-1 opacity-90">{project.imageGallery ? `Gallery of ${project.title}` : project.title}</h3>
                   {/* ...other modal content... */}
@@ -324,7 +324,7 @@ export default function ProjectsSection() {
               {project.imageGallery && (
                 <Stack 
                   cardsData={Object.entries(project.imageGallery).map(([id, img]) => ({ id: parseInt(id), img })).reverse()}
-                  cardDimensions={{ width: 700, height: 500 }}
+                  cardDimensions={{ width: 700, height: 350 }}
                   randomRotation={false}
                   sendToBackOnClick={true}
                 />
