@@ -23,20 +23,23 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (href: string) => {
-    // 1. Immediately close the menu for quicker responsiveness
-    setIsMobileMenuOpen(false); 
+  // Updated function signature to receive the event (e)
+  const scrollToSection = (e, href) => {
+    // 1. Prevent default anchor link behavior immediately.
+    // This is crucial to stop the browser from instantly jumping/reloading.
+    e.preventDefault(); 
+    
+    // 2. Close the menu right away.
+    setIsMobileMenuOpen(false);
 
-    // 2. Add a small delay before scrolling to ensure the menu exit animation starts
-    // before the page scroll begins, making the visual change less jarring.
-    setTimeout(() => {
-        if (href === '#') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-            const element = document.querySelector(href);
-            element?.scrollIntoView({ behavior: 'smooth' });
-        }
-    }, 150); // Delay chosen to be shorter than the menu's exit duration (0.3s)
+    // 3. Execute scroll without brittle setTimeout. 
+    // The scroll will start immediately after the state change, allowing the 
+    // Framer Motion exit animation to play simultaneously for a smoother visual transition.
+    const element = document.querySelector(href === '#' ? 'body' : href);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+    }
+    // If element is not found (e.g., initial load race condition), the browser will use the # anchor fallback.
   };
 
   const menuVariants = {
@@ -47,18 +50,17 @@ export default function Navigation() {
         type: "spring", 
         stiffness: 100, 
         damping: 18,
-        staggerChildren: 0.05, // Slightly faster stagger
-        delayChildren: 0.1 // Reduced delay
+        staggerChildren: 0.05,
+        delayChildren: 0.1
       } 
     },
-    // Enhanced Exit Transition: Use a clean, faster top-slide/fade-out for smoother closure.
     closed: { 
       y: '-100%', 
       opacity: 0,
       transition: { 
         type: "tween", 
         ease: "easeInOut",
-        duration: 0.3 // Faster exit duration
+        duration: 0.3 // Faster exit for better feel
       }
     }
   };
@@ -83,9 +85,10 @@ export default function Navigation() {
       >
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            {/* Logo */}
-            <motion.button
-              onClick={() => scrollToSection('#')}
+            {/* Logo - Changed to motion.a */}
+            <motion.a
+              href="#" // Added href for semantic correctness
+              onClick={(e) => scrollToSection(e, '#')}
               className={`text-2xl font-sans font-thin leading-tight cursor-pointer transition-colors ${
               isScrolled 
                 ? 'text-gray-900 hover:text-blue-500' 
@@ -95,14 +98,15 @@ export default function Navigation() {
               whileTap={{ scale: 0.95 }}
             >
               Ian's
-            </motion.button>
+            </motion.a>
 
-            {/* Desktop Navigation - Hidden */}
+            {/* Desktop Navigation - Dihapus/Disembunyikan */}
             <div className="hidden">
               {navItems.map((item, index) => (
-                <motion.button
+                <motion.a // Changed to motion.a
                   key={item.href}
-                  onClick={() => scrollToSection(item.href)}
+                  href={item.href} // Added href
+                  onClick={(e) => scrollToSection(e, item.href)}
                   className={`hover:text-blue-500 transition-colors relative group font-extralight ${
                   isScrolled 
                     ? 'text-gray-700' 
@@ -114,7 +118,7 @@ export default function Navigation() {
                 >
                   {item.label}
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gray-900 group-hover:w-1/12 transition-all duration-300"></span>
-                </motion.button>
+                </motion.a>
               ))}
             </div>
 
@@ -134,41 +138,41 @@ export default function Navigation() {
         </div>
       </motion.nav>
 
-      {/* Mobile Menu (Full Screen) */}
+      {/* Mobile Menu (Layar Penuh) */}
       <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            variants={menuVariants}
-            initial="closed"
-            animate="open"
-            exit="closed"
-            className="fixed inset-0 z-40 flex flex-col"
-          >
-            {/* Top Section: Menu Links */}
-            <div className="h-2/3 bg-white overflow-y-auto pt-20 shadow-lg">
-              <div className="container mx-auto px-6 py-8">
-                <div className="flex flex-col space-y-6">
-                  {navItems.map((item, index) => (
-                    <motion.button
-                      key={item.href}
-                      // Uses the updated scrollToSection handler
-                      onClick={() => scrollToSection(item.href)} 
-                      variants={itemVariants}
-                      className="text-left text-5xl font-sans font-thin leading-tight text-gray-900 py-3 relative group transition-colors hover:text-gray-600"
-                    >
-                      {item.label}
-                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gray-900 group-hover:w-1/4 transition-all duration-300"></span>
-                    </motion.button>
-                  ))}
-                </div>
-              </div>
-            </div>
+  {isMobileMenuOpen && (
+    <motion.div
+      variants={menuVariants}
+      initial="closed"
+      animate="open"
+      exit="closed"
+      className="fixed inset-0 z-40 flex flex-col"
+    >
+      {/* Bagian atas: Menu, hanya setengah layar */}
+      <div className="h-2/3 bg-white overflow-y-auto pt-20 shadow-lg">
+        <div className="container mx-auto px-6 py-8">
+          <div className="flex flex-col space-y-6">
+            {navItems.map((item, index) => (
+              <motion.a // Changed to motion.a
+                key={item.href}
+                href={item.href} // Added href
+                onClick={(e) => scrollToSection(e, item.href)}
+                variants={itemVariants}
+                className="text-left text-5xl font-sans font-thin leading-tight text-gray-900 py-3 relative group transition-colors hover:text-gray-600"
+              >
+                {item.label}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gray-900 group-hover:w-1/4 transition-all duration-300"></span>
+              </motion.a>
+            ))}
+          </div>
+        </div>
+      </div>
 
-            {/* Bottom Section: Blur background/Click-to-close */}
-            <div className="h-1/2" onClick={() => setIsMobileMenuOpen(false)} />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Bagian bawah: blur background */}
+      <div className="h-1/2" onClick={() => setIsMobileMenuOpen(false)} />
+    </motion.div>
+  )}
+</AnimatePresence>
     </>
   );
 }
