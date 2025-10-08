@@ -24,13 +24,19 @@ export default function Navigation() {
   }, []);
 
   const scrollToSection = (href: string) => {
-    if (href === '#') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      const element = document.querySelector(href);
-      element?.scrollIntoView({ behavior: 'smooth' });
-    }
-    setIsMobileMenuOpen(false);
+    // 1. Immediately close the menu for quicker responsiveness
+    setIsMobileMenuOpen(false); 
+
+    // 2. Add a small delay before scrolling to ensure the menu exit animation starts
+    // before the page scroll begins, making the visual change less jarring.
+    setTimeout(() => {
+        if (href === '#') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            const element = document.querySelector(href);
+            element?.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, 150); // Delay chosen to be shorter than the menu's exit duration (0.3s)
   };
 
   const menuVariants = {
@@ -41,16 +47,18 @@ export default function Navigation() {
         type: "spring", 
         stiffness: 100, 
         damping: 18,
-        staggerChildren: 0.07,
-        delayChildren: 0.2
+        staggerChildren: 0.05, // Slightly faster stagger
+        delayChildren: 0.1 // Reduced delay
       } 
     },
+    // Enhanced Exit Transition: Use a clean, faster top-slide/fade-out for smoother closure.
     closed: { 
       y: '-100%', 
       opacity: 0,
       transition: { 
         type: "tween", 
-        duration: 0.5
+        ease: "easeInOut",
+        duration: 0.3 // Faster exit duration
       }
     }
   };
@@ -89,8 +97,7 @@ export default function Navigation() {
               Ian's
             </motion.button>
 
-            {/* Desktop Navigation - Dihapus/Disembunyikan */}
-            {/* Karena Anda hanya ingin ikon menu, bagian ini tidak ditampilkan */}
+            {/* Desktop Navigation - Hidden */}
             <div className="hidden">
               {navItems.map((item, index) => (
                 <motion.button
@@ -111,10 +118,9 @@ export default function Navigation() {
               ))}
             </div>
 
-            {/* Mobile Menu Button - SELALU TERLIHAT (Hapus md:hidden) */}
+            {/* Mobile Menu Button - ALWAYS VISIBLE */}
             <Button
               variant="ghost"
-              // Hapus 'md:hidden' agar tombol muncul di semua ukuran layar
               className="text-gray-900 bg-transparent hover:text-gray-500 hover:bg-transparent p-0 h-auto w-auto" 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
@@ -128,40 +134,41 @@ export default function Navigation() {
         </div>
       </motion.nav>
 
-      {/* Mobile Menu (Layar Penuh) - Digunakan untuk menampilkan tautan di semua ukuran */}
+      {/* Mobile Menu (Full Screen) */}
       <AnimatePresence>
-  {isMobileMenuOpen && (
-    <motion.div
-      variants={menuVariants}
-      initial="closed"
-      animate="open"
-      exit="closed"
-      className="fixed inset-0 z-40 flex flex-col"
-    >
-      {/* Bagian atas: Menu, hanya setengah layar */}
-      <div className="h-2/3 bg-white overflow-y-auto pt-20 shadow-lg">
-        <div className="container mx-auto px-6 py-8">
-          <div className="flex flex-col space-y-6">
-            {navItems.map((item, index) => (
-              <motion.button
-                key={item.href}
-                onClick={() => scrollToSection(item.href)}
-                variants={itemVariants}
-                className="text-left text-5xl font-sans font-thin leading-tight text-gray-900 py-3 relative group transition-colors hover:text-gray-600"
-              >
-                {item.label}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gray-900 group-hover:w-1/4 transition-all duration-300"></span>
-              </motion.button>
-            ))}
-          </div>
-        </div>
-      </div>
+        {isMobileMenuOpen && (
+          <motion.div
+            variants={menuVariants}
+            initial="closed"
+            animate="open"
+            exit="closed"
+            className="fixed inset-0 z-40 flex flex-col"
+          >
+            {/* Top Section: Menu Links */}
+            <div className="h-2/3 bg-white overflow-y-auto pt-20 shadow-lg">
+              <div className="container mx-auto px-6 py-8">
+                <div className="flex flex-col space-y-6">
+                  {navItems.map((item, index) => (
+                    <motion.button
+                      key={item.href}
+                      // Uses the updated scrollToSection handler
+                      onClick={() => scrollToSection(item.href)} 
+                      variants={itemVariants}
+                      className="text-left text-5xl font-sans font-thin leading-tight text-gray-900 py-3 relative group transition-colors hover:text-gray-600"
+                    >
+                      {item.label}
+                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gray-900 group-hover:w-1/4 transition-all duration-300"></span>
+                    </motion.button>
+                  ))}
+                </div>
+              </div>
+            </div>
 
-      {/* Bagian bawah: blur background */}
-      <div className="h-1/2" onClick={() => setIsMobileMenuOpen(false)} />
-    </motion.div>
-  )}
-</AnimatePresence>
+            {/* Bottom Section: Blur background/Click-to-close */}
+            <div className="h-1/2" onClick={() => setIsMobileMenuOpen(false)} />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
