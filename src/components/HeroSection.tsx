@@ -24,12 +24,7 @@ export default function HeroSection() {
     link.click();
     document.body.removeChild(link);
   };
-
-
-
-
-
-
+  
   return (
     <section
       id="home"

@@ -16,7 +16,6 @@ import Img7 from '../assets/Screenshot 2025-10-03 at 22.09.10.png';
 
 
 
-
 function useResponsiveProjectsPerPage() {
   const [perPage, setPerPage] = useState(3);
 
@@ -34,8 +33,6 @@ function useResponsiveProjectsPerPage() {
   return perPage;
 }
 
-
-
 export default function ProjectsSection() {
   const cursor = useCursorPosition();
   const ref = useRef(null);
@@ -46,6 +43,17 @@ export default function ProjectsSection() {
     target: ref,
     offset: ["0.5 1", "0.5 0.3"],
   });
+
+  const handleResumeClick = () => {
+    const resumeUrl = "/Final Paper - 27.pdf"; 
+    const link = document.createElement('a');
+    link.href = resumeUrl;
+    link.download = 'Ian_Frederick_Research_Paper.pdf'; 
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const projects = [
     {
       title: "Dynamic Traffic Light Control Research",
@@ -56,9 +64,9 @@ export default function ProjectsSection() {
       color: "hover:bg-blue-600",
       modalBg: "bg-blue-600",
       customButton: { 
-        text: "View Report", 
-        link: "#report",
+        text: "View Research", 
         icon: "FileText",
+        onClick:handleResumeClick,
       }
     },
     {
@@ -132,24 +140,27 @@ export default function ProjectsSection() {
   const renderActionButton = (project, idx) => {
     
     if (project.customButton) {
-        const buttonData = project.customButton;
-        // IconComponent harus di-resolve dari string jika perlu, tapi kita asumsikan sudah berupa component
-        const IconComponent = buttonData.icon === "FileText" ? FileText : null; 
-        
-        return (
-          <Button 
-            size="sm" 
-            className="rounded-none bg-blue-500 hover:bg-blue-600 text-xs text-white w-full" 
-            onClick={(e) => {
-              e.stopPropagation();
-              window.open(buttonData.link, '_blank');
-            }}
-          >
-            {IconComponent && <IconComponent className="mr-2 h-4 w-4" />}
-            {buttonData.text}
-          </Button>
-        );
-    } 
+    const buttonData = project.customButton;
+    const IconComponent = buttonData.icon === "FileText" ? FileText : null;
+
+    return (
+      <Button
+        size="sm"
+        className="rounded-none bg-blue-500 hover:bg-blue-600 text-xs text-white w-full"
+        onClick={(e) => {
+          e.stopPropagation();
+          if (buttonData.onClick) {
+            buttonData.onClick();
+          } else if (buttonData.link) {
+            window.open(buttonData.link, "_blank");
+          }
+        }}
+      >
+        {IconComponent && <IconComponent className="mr-2 h-4 w-4" />}
+        {buttonData.text}
+      </Button>
+    );
+  }
     
     return (
       <>
