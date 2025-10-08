@@ -324,7 +324,7 @@ export default function ProjectsSection() {
               {project.imageGallery && (
                 <Stack 
                   cardsData={Object.entries(project.imageGallery).map(([id, img]) => ({ id: parseInt(id), img })).reverse()}
-                  cardDimensions={{ width: 700, height: 700 }}
+                  cardDimensions={{ width: 700, height: 500 }}
                   randomRotation={false}
                   sendToBackOnClick={true}
                 />
