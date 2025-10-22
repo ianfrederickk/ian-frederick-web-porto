@@ -1,53 +1,86 @@
-import { useState } from "react";
+"use client";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Github, Download, ChevronDown } from "lucide-react";
 
 export default function HeroSection() {
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = (e) => {
-    setCursor({ x: e.clientX, y: e.clientY });
-  };
   const [showBlur, setShowBlur] = useState(false);
+  const sectionRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    // Handler runs on every mouse move. We keep the cursor coords
+    // and decide whether to show the blur based on distance to the hero rect.
+    function handleMove(e: MouseEvent) {
+      setCursor({ x: e.clientX, y: e.clientY });
+
+      const el = sectionRef.current;
+      if (!el) {
+        setShowBlur(false);
+        return;
+      }
+
+      const rect = el.getBoundingClientRect();
+
+      // margin in px around the hero where the blur still remains visible
+      const margin = 80;
+
+      const insideX = e.clientX >= rect.left - margin && e.clientX <= rect.right + margin;
+      const insideY = e.clientY >= rect.top - margin && e.clientY <= rect.bottom + margin;
+
+      setShowBlur(insideX && insideY);
+    }
+
+    // Add listener on document so it captures when mouse goes over navbar etc.
+    document.addEventListener("mousemove", handleMove);
+    return () => document.removeEventListener("mousemove", handleMove);
+  }, []);
 
   const handleGithubClick = () => {
-    window.open("https://github.com/ianganteng", "_blank"); 
+    window.open("https://github.com/ianganteng", "_blank");
   };
 
   const handleResumeClick = () => {
-    const resumeUrl = "/CV_Academic_Ian_Frederick.pdf"; 
-    const link = document.createElement('a');
+    const resumeUrl = "/CV_Academic_Ian_Frederick.pdf";
+    const link = document.createElement("a");
     link.href = resumeUrl;
-    link.download = 'Ian_Frederick_CV.pdf'; 
+    link.download = "Ian_Frederick_CV.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
-  
+
   return (
     <section
       id="home"
-      className="h-screen w-full flex items-center justify-center relative overflow-hidden bg-white snap-start"
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setShowBlur(true)}
-      onMouseLeave={() => setShowBlur(false)}
+      ref={sectionRef}
+      className="h-screen w-full flex items-center justify-center relative bg-white snap-start overflow-hidden"
       style={{ marginBottom: 0, paddingBottom: 0 }}
     >
-    
-    {showBlur && (
-          <div
-            className="fixed inset-0 pointer-events-none z-0"
-            style={{
-              background: `radial-gradient(600px at ${cursor.x}px ${cursor.y}px, rgba(192, 64, 255, 0.18) 0%, rgba(192, 64, 255, 0.10) 70%, transparent 100%)`,
-              transition: 'background 1.5s',
-            }}
-          />
-        )}
+      {/* BLUR: pointer-events-none so it never blocks clicks */}
+      {showBlur && (
+        <motion.div
+          key="hero-blur"
+          className="absolute inset-0 pointer-events-none z-[5]"
+          style={{
+            background: `radial-gradient(600px at ${cursor.x}px ${cursor.y}px, rgba(192, 64, 255, 0.25) 0%, rgba(192, 64, 255, 0.10) 70%, transparent 100%)`,
+          }}
+          animate={{
+            opacity: [0.6, 1, 0.6],
+            scale: [1, 1.02, 1],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      )}
 
-
-      {/* Konten */}
-  <div className="container mx-auto text-center max-w-4xl relative z-10 px-6">
+      {/* Content (above blur) */}
+      <div className="container mx-auto text-center max-w-4xl relative z-10 px-6">
+        {/* ... your existing motion blocks unchanged ... */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

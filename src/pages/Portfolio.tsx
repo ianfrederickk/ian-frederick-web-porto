@@ -6,13 +6,11 @@ import SkillsSection from '@/components/SkillsSection';
 import ContactSection from '@/components/ContactSection';
 import TransitionSection from '@/components/TransitionSection';
 
-import Footer from '@/components/Footer';
-
 export default function Portfolio() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navigation />
-      <main>
+      <main className="bg-white">
         <HeroSection />
         <ProjectsSection />
         <SkillsSection />
@@ -20,8 +18,7 @@ export default function Portfolio() {
         <AboutSection />
         <ContactSection />
       </main>
-      
-      <Footer />
+    
     </div>
   );
 }

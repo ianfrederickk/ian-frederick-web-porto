@@ -4,7 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Plasma-inspired design system with sophisticated gradients and cinematic aesthetics */
+
+html, body {
+  background-color: white;
+}
 
 @layer base {
   :root {
@@ -100,18 +103,22 @@
     @apply border-border;
   }
 
-  body {
-    @apply bg-background text-foreground font-['Inter'] antialiased;
-    background: 
-      linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--background) / 0.98) 100%),
-      radial-gradient(ellipse at top left, hsl(var(--plasma-blue) / 0.03), transparent),
-      radial-gradient(ellipse at bottom right, hsl(var(--plasma-purple) / 0.03), transparent);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+html {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+}
 
-  html {
-    scroll-behavior: smooth;
+body {
+  overflow-x: hidden;
+  overflow-y: auto; /* biar scroll-snap aktif */
+}
+
+
+  section,
+  footer {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 }
 
@@ -120,6 +127,7 @@
   .plasma-glow {
     position: relative;
   }
+
 
   .plasma-glow::before {
     content: '';

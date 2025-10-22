@@ -53,7 +53,7 @@ export default function AboutSection() {
   const profile = profiles[currentProfile];
 
   return (
-    <section id="about" className="min-h-screen w-full flex items-center justify-center relative p-0 overflow-hidden bg-neutral-900 font-sans snap-start">
+    <section id="about" className="min-h-screen w-full flex items-center justify-center relative p-0 bg-neutral-900 font-sans">
       {/* Background Image with animation */}
       <motion.img
         key={currentProfile}

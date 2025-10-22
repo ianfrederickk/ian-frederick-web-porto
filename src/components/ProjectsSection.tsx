@@ -218,7 +218,7 @@ export default function ProjectsSection() {
     <section
       ref={ref}
       id="projects"
-      className="relative min-h-screen bg-white text-black py-20 px-4 md:px-8 lg:px-16 flex items-center justify-center overflow-hidden scroll-mt-25"
+      className="relative min-h-screen bg-white text-black py-20 px-4 md:px-8 lg:px-16 flex items-center justify-center overflow-hidden scroll-mt-25 snap-start"
       onMouseEnter={() => setShowBlur(true)}
       onMouseLeave={() => setShowBlur(false)}
     >

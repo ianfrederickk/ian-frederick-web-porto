@@ -1,11 +1,12 @@
 "use client";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-export default function ContactSection() {
+
+export default function Footer() {
   return (
-    <section
+    <footer
       id="contact"
-      className="relative min-h-screen w-full bg-white text-black py-20 px-4 md:px-8 lg:px-16 flex items-center justify-center overflow-hidden scroll-mt-20 snap-start"
+      className="relative h-screen w-full bg-white text-black py-20 px-4 md:px-8 lg:px-16 flex items-center justify-center overflow-hidden scroll-mt-20 snap-start"
     >
       <div className="w-[90%]">
         <div className="relative z-10 container mx-auto max-w-7xl">
@@ -13,7 +14,10 @@ export default function ContactSection() {
             <motion.div
               initial="hidden"
               whileInView="visible"
-              variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8 } } }}
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+              }}
               viewport={{ once: true }}
               className="flex flex-col justify-start"
               style={{ flex: 1 }}
@@ -26,7 +30,8 @@ export default function ContactSection() {
                 free to reach out directly.
               </p>
             </motion.div>
-            {/* Text Links (stacked, 2 columns, right side) */}
+
+            {/* RIGHT SIDE (Navigation Links) */}
             <div className="grid grid-cols-2 gap-x-8 gap-y-4 ml-8 mt-2">
               {[
                 { label: "Home", link: "#home" },
@@ -39,8 +44,8 @@ export default function ContactSection() {
                 <motion.a
                   key={i}
                   href={item.link}
-                  target={item.link.startsWith('http') ? "_blank" : undefined}
-                  rel={item.link.startsWith('http') ? "noopener noreferrer" : undefined}
+                  target={item.link.startsWith("http") ? "_blank" : undefined}
+                  rel={item.link.startsWith("http") ? "noopener noreferrer" : undefined}
                   className="relative text-lg font-medium text-neutral-700 group"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -57,38 +62,29 @@ export default function ContactSection() {
             </div>
           </div>
 
-          {/* Email input below header/links */}
+          {/* EMAIL BUTTON */}
           <div className="w-full flex flex-col items-start px-4 md:items-start">
             <motion.a
               href="mailto:ian.hartanto@binus.ac.id?subject=Hi Ian! Are you interested to[Your Topic]"
               target="_blank"
               rel="noopener noreferrer"
-              className="
-                relative inline-flex items-center justify-center 
+              className="relative inline-flex items-center justify-center 
                 px-8 py-4 border-2 border-purple-600 text-purple-600 
-                font-medium text-lg overflow-hidden group mt-6 max-w-xs
-              "
+                font-medium text-lg overflow-hidden group mt-6 max-w-xs"
               initial={{ x: -200, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
               whileHover={{ scale: 1.05 }}
             >
-              {/* Background ungu animasi */}
               <span
-                className="
-                  absolute inset-0 bg-fuchsia-500 translate-x-[-100%] 
-                  group-hover:translate-x-0 transition-transform duration-500 ease-out
-                "
+                className="absolute inset-0 bg-fuchsia-500 translate-x-[-100%] 
+                  group-hover:translate-x-0 transition-transform duration-500 ease-out"
               />
-
-              {/* Text + Panah */}
               <span
-                className="
-                  relative flex items-center gap-2 
+                className="relative flex items-center gap-2 
                   transition-all duration-500 ease-out 
-                  group-hover:text-white group-hover:scale-110
-                "
+                  group-hover:text-white group-hover:scale-110"
               >
                 Start Conversation
                 <ArrowRight
@@ -96,9 +92,15 @@ export default function ContactSection() {
                 />
               </span>
             </motion.a>
+          </div>
+
+          <div className="flex justify-between items-center px-4 mt-10 pb-6">
+            <p className="text-left text-md text-neutral-500 font-sans">
+              © 2025 Portfolio by Ian Frederick. Built with React, Three.js, Framer Motion, and passion for AI.
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </footer>
   );
 }
