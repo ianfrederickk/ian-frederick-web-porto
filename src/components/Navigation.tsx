@@ -20,7 +20,7 @@ const Navigation: React.FC = () => {
 
   return (
     <nav
-      className="fixed top-0 left-0 w-full z-[1000] flex items-center justify-between px-6 py-4 bg-transparent"                                                                                    
+      className="fixed top-0 left-0 w-full h-[80px] z-[1000] flex items-center justify-between px-6 py-4 bg-transparent"                                                                                    
       style={{
         backdropFilter: "blur(10px)",
         WebkitBackdropFilter: "blur(10px)",
@@ -34,11 +34,11 @@ const Navigation: React.FC = () => {
         displaySocials={true}
         displayItemNumbering={true}
         menuButtonColor="#000000ff"
-        openMenuButtonColor="#3B82F6"
+        openMenuButtonColor="#000000ff"
         changeMenuColorOnOpen={true}
         colors={["#B19EEF", "#5227FF"]}
         logoUrl="text-ians" 
-        accentColor="#5227FF"
+        accentColor="#000000ff"
         onMenuOpen={() => console.log("Menu opened")}
         onMenuClose={() => console.log("Menu closed")}
         isFixed={true}

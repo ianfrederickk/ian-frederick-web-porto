@@ -11,12 +11,16 @@ export default function Portfolio() {
     <div className="min-h-screen">
       <Navigation />
       <main className="bg-white">
-        <HeroSection />
-        <ProjectsSection />
+        <section className='snap-container'>
+          <HeroSection />
+          <ProjectsSection />
+        </section>
+
         <SkillsSection />
         <TransitionSection />
         <AboutSection />
         <ContactSection />
+
       </main>
     
     </div>

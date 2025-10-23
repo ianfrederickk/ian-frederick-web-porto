@@ -85,7 +85,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         preLayers = Array.from(preContainer.querySelectorAll('.sm-prelayer')) as HTMLElement[];
       }
       preLayerElsRef.current = preLayers;
-      
+
       const offscreenX = position === 'left' ? -100 : 100;
       gsap.set([panel, ...preLayers], { xPercent: offscreenX });
       gsap.set(plusH, { transformOrigin: '50% 50%', rotate: 0 });
@@ -101,7 +101,6 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
     const panel = panelRef.current;
     const layers = preLayerElsRef.current;
     if (!panel || !layers) return;
-    
 
     openTlRef.current?.kill();
     if (closeTweenRef.current) {
@@ -119,7 +118,6 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
     const layerStates = layers.map(el => ({ el, start: Number(gsap.getProperty(el, 'xPercent')) }));
     const panelStart = Number(gsap.getProperty(panel, 'xPercent'));
 
-   
     if (itemEls.length) {
       gsap.set(itemEls, { yPercent: 140, rotate: 10 });
     }
@@ -137,7 +135,6 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 
     layerStates.forEach((ls, i) => {
       tl.fromTo(ls.el, { xPercent: ls.start }, { xPercent: 0, duration: 0.5, ease: 'power4.out' }, i * 0.07);
-
     });
     const lastTime = layerStates.length ? (layerStates.length - 1) * 0.07 : 0;
     const panelInsertTime = lastTime + (layerStates.length ? 0.08 : 0);
@@ -231,11 +228,11 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 
     const all: HTMLElement[] = [...layers, panel];
     closeTweenRef.current?.kill();
-    
-      const offscreenX = position === 'left' ? -100 : 100;
-      closeTweenRef.current = gsap.to(all, {
+
+    const offscreenX = position === 'left' ? -100 : 100;
+    closeTweenRef.current = gsap.to(all, {
       xPercent: offscreenX,
-      duration: 0.40,
+      duration: 0.4,
       ease: 'power3.in',
       overwrite: 'auto',
       onComplete: () => {
@@ -344,6 +341,27 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
     animateText(target);
   }, [playOpen, playClose, animateIcon, animateColor, animateText]);
 
+
+  const handleMenuItemClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, link: string) => {
+      e.preventDefault();
+      const targetId = link.replace('#', '');
+      const section = document.getElementById(targetId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      // tutup menu sesudah klik
+      onMenuClose?.();
+      playClose();
+      openRef.current = false;
+      setOpen(false);
+      animateIcon(false);
+      animateColor(false);
+      animateText(false);
+    },
+    [onMenuClose, playClose, animateIcon, animateColor, animateText]
+  );
+
   return (
     <div
       className={(className ? className + ' ' : '') + 'staggered-menu-wrapper' + (isFixed ? ' fixed-wrapper' : '')}
@@ -366,24 +384,26 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
       <header className="staggered-menu-header" aria-label="Main navigation header">
         <div className="sm-logo" aria-label="Logo">
           {logoUrl === 'text-ians' ? (
-          <motion.span className="text-2xl font-sans font-extralight leading-tight cursor-pointer transition-colors text-gray-900 hover:text-blue-500"
-          whileHover={{ scale: 1.05 }} >    
-            Ian's
-          </motion.span>
-        ) : (
-          <img
-            src={logoUrl || '/src/assets/logos/reactbits-gh-white.svg'}
-            alt="Logo"
-            className="sm-logo-img"
-            draggable={false}
-            width={110}
-            height={24}
-          />
+            <motion.span
+              className="text-2xl font-sans font-extralight leading-tight cursor-pointer transition-colors text-gray-900 hover:text-blue-500"
+              whileHover={{ scale: 1.05 }}
+            >
+              Ian's
+            </motion.span>
+          ) : (
+            <img
+              src={logoUrl || '/src/assets/logos/reactbits-gh-white.svg'}
+              alt="Logo"
+              className="sm-logo-img"
+              draggable={false}
+              width={110}
+              height={24}
+            />
           )}
         </div>
         <button
           ref={toggleBtnRef}
-          className="sm-toggle "
+          className="sm-toggle"
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
           aria-controls="staggered-menu-panel"
@@ -393,9 +413,10 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
           <span ref={textWrapRef} className="sm-toggle-textWrap" aria-hidden="true">
             <span ref={textInnerRef} className="sm-toggle-textInner">
               {textLines.map((l, i) => (
-                <motion.span className="text-xl sm-toggle-line leading-tight font-sans font-extralight hover:text-blue-500" 
-                key={i}
-                whileHover={{ scale: 1.05 }}
+                <motion.span
+                  className="text-xl sm-toggle-line leading-tight font-sans font-extralight hover:text-blue-500"
+                  key={i}
+                  whileHover={{ scale: 1.05 }}
                 >
                   {l}
                 </motion.span>
@@ -409,47 +430,56 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         </button>
       </header>
 
-<aside id="staggered-menu-panel" ref={panelRef} className="staggered-menu-panel" aria-hidden={!open}>
-    <div className="sm-panel-inner">
-      <ul className="sm-panel-list" role="list">
-        {items && items.length ? (
-          items.map((it, idx) => (
-            <li className="sm-panel-itemWrap" key={it.label + idx}>
-              <a className="sm-panel-item" href={it.link} aria-label={it.ariaLabel} data-index={idx + 1}>
-                <span className="sm-panel-itemLabel leading-tight font-sans font-extralight drop-shadow-lg">{it.label}</span>
-              </a>
-            </li>
-          ))
-        ) : (
-          <li className="sm-panel-itemWrap" aria-hidden="true">
-            <span className="sm-panel-item">
-              <span className="sm-panel-itemLabel leading-tight font-sans font-extralight drop-shadow-lg">No items</span>
-            </span>
-          </li>
-        )}
-      </ul>
-      {displaySocials && socialItems && socialItems.length > 0 && (
-        <div className="sm-socials" aria-label="Social links">
-          <h3 className="sm-socials-title leading-tight font-sans font-extralight drop-shadow-lg">Socials</h3>
-          <ul className="sm-socials-list" role="list">
-            {socialItems.map((s, i) => (
-              <li key={s.label + i} className="sm-socials-item">
-                <a 
-                  href={s.link} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  // Apply classes to the social links
-                  className="sm-socials-link leading-tight font-sans font-thin drop-shadow-lg"
-                >
-                  {s.label}
-                </a>
+      <aside id="staggered-menu-panel" ref={panelRef} className="staggered-menu-panel" aria-hidden={!open}>
+        <div className="sm-panel-inner">
+          <ul className="sm-panel-list" role="list">
+            {items && items.length ? (
+              items.map((it, idx) => (
+                <li className="sm-panel-itemWrap" key={it.label + idx}>
+                  <a
+                    className="sm-panel-item"
+                    href={it.link}
+                    aria-label={it.ariaLabel}
+                    data-index={idx + 1}
+                    onClick={(e) => handleMenuItemClick(e, it.link)} // ⬅️ tambahkan ini
+                  >
+                    <span className="sm-panel-itemLabel leading-tight font-sans font-extralight drop-shadow-lg hover:text-gray">
+                      {it.label}
+                    </span>
+                  </a>
+                </li>
+              ))
+            ) : (
+              <li className="sm-panel-itemWrap" aria-hidden="true">
+                <span className="sm-panel-item">
+                  <span className="sm-panel-itemLabel leading-tight font-sans font-extralight drop-shadow-lg">
+                    No items
+                  </span>
+                </span>
               </li>
-            ))}
+            )}
           </ul>
+          {displaySocials && socialItems && socialItems.length > 0 && (
+            <div className="sm-socials" aria-label="Social links">
+              <h3 className="sm-socials-title leading-tight font-sans font-extralight drop-shadow-lg">Socials</h3>
+              <ul className="sm-socials-list" role="list">
+                {socialItems.map((s, i) => (
+                  <li key={s.label + i} className="sm-socials-item">
+                    <a
+                      href={s.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="sm-socials-link leading-tight font-sans font-thin drop-shadow-lg"
+                    >
+                      {s.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
-      )}
-    </div>
-</aside>
+      </aside>
     </div>
   );
 };

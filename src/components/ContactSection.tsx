@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer
       id="contact"
-      className="relative h-screen w-full bg-white text-black py-20 px-4 md:px-8 lg:px-16 flex items-center justify-center overflow-hidden scroll-mt-20 snap-start"
+      className="relative h-screen w-full bg-white text-black py-20 px-4 md:px-8 lg:px-16 flex items-center justify-center overflow-hidden scroll-mt-4 snap-start"
     >
       <div className="w-[90%]">
         <div className="relative z-10 container mx-auto max-w-7xl">

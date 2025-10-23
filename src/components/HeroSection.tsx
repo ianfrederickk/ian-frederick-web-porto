@@ -55,7 +55,7 @@ export default function HeroSection() {
     <section
       id="home"
       ref={sectionRef}
-      className="h-screen w-full flex items-center justify-center relative bg-white snap-start overflow-hidden"
+      className="h-screen w-full flex items-center justify-center relative bg-white overflow-visible"
       style={{ marginBottom: 0, paddingBottom: 0 }}
     >
       {/* BLUR: pointer-events-none so it never blocks clicks */}

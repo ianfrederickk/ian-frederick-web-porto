@@ -31,7 +31,7 @@
   padding: 2em;
   background: transparent;
   pointer-events: none;
-  z-index: 20;
+  z-index: 50;
 }
 
 .staggered-menu-header > * {

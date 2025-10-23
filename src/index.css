@@ -111,9 +111,34 @@ html {
 
 body {
   overflow-x: hidden;
-  overflow-y: auto; /* biar scroll-snap aktif */
+  overflow-y: auto; 
+}
+.snap-container {
+  scroll-snap-type: y mandatory;   
+  height: 100vh;                   
+  overflow-y: scroll;              
+  overflow-x: hidden;
+  scroll-behavior: smooth;        
+}
+.snap-container > * {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+@media (max-width: 768px) {
+  .snap-container {
+    scroll-snap-type: none; /* Matikan snap di layar kecil */
+    height: auto;
+    overflow-y: visible;
+  }
+
+  .snap-container > * {
+    height: auto;
+  }
 }
 
+.snap-container > * {
+  scroll-snap-align: start;       
+  height: 100vh;                   
+}
 
   section,
   footer {
@@ -248,4 +273,14 @@ body {
     border-radius: 50%;
     border: 2px solid hsl(var(--background));
   }
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none; 
 }
