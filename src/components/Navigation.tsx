@@ -9,7 +9,6 @@ const Navigation: React.FC = () => {
     { label: "Projects", ariaLabel: "View projects", link: "#projects" },
     { label: "About", ariaLabel: "Learn about me", link: "#about" },
     { label: "Skills", ariaLabel: "View skills", link: "#skills" },
-    { label: "Contact", ariaLabel: "Get in touch", link: "#contact" },
   ];
 
   const socialItems = [
