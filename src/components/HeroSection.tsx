@@ -42,7 +42,7 @@ export default function HeroSection() {
   };
 
   const handleResumeClick = () => {
-    const resumeUrl = "/CV_Academic_Ian_Frederick.pdf";
+    const resumeUrl = "/CV_2025_Ian_Frederick.pdf";
     const link = document.createElement("a");
     link.href = resumeUrl;
     link.download = "Ian_Frederick_CV.pdf";
