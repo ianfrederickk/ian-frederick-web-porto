@@ -1,4 +1,2 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> beec1c3 (update semua file terbaru)
+# Personal Portfolio
+My Personal Portfolio, deployed on vercel. Built with React, TypeScript, Three.js, and Framer Motion.
