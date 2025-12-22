@@ -75,7 +75,7 @@ export default function ProjectsSection() {
       image: "🐶", 
       techStack: ["Python","TensorFlow / Keras", "Pandas", "Matplotlib", "Scikit-learn", "Numpy","Pillow"],
       github: "https://github.com/ianganteng/dog-emotion-classification",
-      demo: "#", 
+      demo: "https://huggingface.co/spaces/ianhee/dog-emotion-classifier", 
       type: "Computer Vision",
       color: "hover:bg-emerald-500",
       modalBg: "bg-emerald-500"
