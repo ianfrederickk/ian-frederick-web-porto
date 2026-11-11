@@ -47,7 +47,7 @@ export default function Footer() {
                   { label: "Skills", link: "#skills" },
                   { label: "About", link: "#about" },
                   { label: "Linkedin", link: "https://www.linkedin.com/in/ian-frederick-801347346/" },
-                  { label: "GitHub", link: "https://github.com/ianganteng" },
+                  { label: "GitHub", link: "https://github.com/ianfrederickk" },
                 ].map((item, i) => (
                   <motion.a
                     key={i}

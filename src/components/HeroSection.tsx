@@ -38,11 +38,11 @@ export default function HeroSection() {
   }, []);
 
   const handleGithubClick = () => {
-    window.open("https://github.com/ianganteng", "_blank");
+    window.open("https://github.com/ianfrederickk", "_blank");
   };
 
   const handleResumeClick = () => {
-    const resumeUrl = "/CV_2025_Ian_Frederick.pdf";
+    const resumeUrl = "/CV_2026_Ian.pdf";
     const link = document.createElement("a");
     link.href = resumeUrl;
     link.download = "Ian_Frederick_CV.pdf";

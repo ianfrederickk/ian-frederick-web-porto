@@ -13,7 +13,7 @@ const Navigation: React.FC = () => {
 
   const socialItems = [
     { label: "Twitter", link: "https://twitter.com" },
-    { label: "GitHub", link: "https://github.com" },
+    { label: "GitHub", link: "https://github.com/ianfrederickk" },
     { label: "LinkedIn", link: "https://linkedin.com" },
   ];
 
